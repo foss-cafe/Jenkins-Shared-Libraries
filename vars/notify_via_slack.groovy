@@ -9,7 +9,7 @@ import hudson.tasks.test.AbstractTestResultAction;
 import hudson.model.Actionable;
 
 def call(String buildStatus, String channel) {
-
+    buildStatus =  buildStatus ?: 'STARTED'
   // Default values
   def colorName = 'RED'
   def colorCode = '#FF0000'
