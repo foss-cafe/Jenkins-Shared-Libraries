@@ -13,9 +13,8 @@ def call(String buildStatus = 'STARTED',String subscribers="admin@example.com"){
   echo "${commit}"
   echo "${author}"
   echo "${message}"
-
   def mail_body_html='''
-<!DOCTYPE html>
+<html>
 <head>
   <title>Build report</title>
 </head>
