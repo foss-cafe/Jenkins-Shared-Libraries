@@ -34,7 +34,7 @@ def call(String buildStatus = 'STARTED',String subscribers="admin@example.com"){
 </body>
 </html>
 ''' 
-def binding = ["buildStatus":buildStatus, "RUN_DISPLAY_URL":"${env.BUILD_URL}","JOB_NAME":"${env.JOB_NAME}","durationString":"${currentBuild.durationString}","commit":commit,"author":author,"message":message,"branch": branch]  
+def binding = ["buildStatus":buildStatus, "RUN_DISPLAY_URL":"${env.BUILD_URL}","JOB_NAME":"${env.JOB_NAME}","durationString":"${currentBuild.durationString}","commit":commit,"author":author,"message":message,"branch": branchName]  
 def engine = new groovy.text.SimpleTemplateEngine() 
 def template = engine.createTemplate(mail_body_html).make(binding)
 emailext mimeType: 'text/html', attachLog: true, body: template.toString(), compressLog: true, subject: subject, to: subscribers
