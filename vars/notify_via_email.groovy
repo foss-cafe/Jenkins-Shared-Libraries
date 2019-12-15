@@ -4,7 +4,7 @@ def call(String buildStatus = 'STARTED',String subscribers="admin@example.com"){
   buildStatus = buildStatus ?: 'SUCCESSFUL'
   subscribers = subscribers ?: 'rajeev.jaggavarapu@srijan.net'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]"
-  def branchName = sh(returnStdout: true, script: 'git --show-current')
+  def branchName = sh(returnStdout: true, script: 'git branch --show-current')
   def commit = sh(returnStdout: true, script: 'git rev-parse HEAD')
   def author = sh(returnStdout: true, script: "git --no-pager show -s --format='%an'").trim()
   def message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
