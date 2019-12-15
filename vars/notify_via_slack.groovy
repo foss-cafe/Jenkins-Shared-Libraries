@@ -103,6 +103,6 @@ def call(String buildStatus = 'STARTED',String channel="#jenkins") {
   println attachments.toString()
 
   // Send notifications
-  slackSend (color: colorCode,attachments: attachments, message: subject, channel: channel)
+  slackSend (color: colorCode,attachments: attachments.toString(), message: subject, channel: channel)
 
 }
