@@ -8,11 +8,7 @@ import net.sf.json.JSONObject;
 import hudson.tasks.test.AbstractTestResultAction;
 import hudson.model.Actionable;
 
-def call(String buildStatus = 'STARTED') {
-
-  // buildStatus of null means successfull
-  buildStatus = buildStatus ?: 'SUCCESSFUL'
-
+def call(String buildStatus, String channel) {
 
   // Default values
   def colorName = 'RED'
@@ -102,6 +98,6 @@ def call(String buildStatus = 'STARTED') {
   println attachments.toString()
 
   // Send notifications
-  slackSend (color: colorCode, message: subject, attachments: attachments.toString())
+  slackSend (color: colorCode, message: subject, attachments: attachments.toString(),channel: channel)
 
 }
