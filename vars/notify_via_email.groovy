@@ -1,4 +1,5 @@
 import hudson.model.Actionable;
+@NonCPS
 def call(String buildStatus = 'STARTED',String subscribers="admin@example.com"){
 // buildStatus of null means successfull
   buildStatus = buildStatus ?: 'SUCCESSFUL'
