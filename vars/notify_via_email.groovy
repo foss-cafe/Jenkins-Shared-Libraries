@@ -1,10 +1,15 @@
-import hudson.model.Actionable;
-@NonCPS
 def call(String buildStatus = 'STARTED',String subscribers="admin@example.com"){
 // buildStatus of null means successfull
   buildStatus = buildStatus ?: 'SUCCESSFUL'
   subscribers = subscribers ?: 'admin@example.com'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]"
+def template = generate_body(buildStatus)
+emailext mimeType: 'text/html', attachLog: true, body: template.toString(), compressLog: true, subject: subject, to: subscribers
+
+}
+
+def generate_body(String buildStatus = 'STARTED'){
+    buildStatus = buildStatus ?: 'SUCCESSFUL'
   def branchName = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD')
   def commit = sh(returnStdout: true, script: 'git rev-parse HEAD')
   def author = sh(returnStdout: true, script: "git --no-pager show -s --format='%an'").trim()
@@ -37,6 +42,6 @@ def call(String buildStatus = 'STARTED',String subscribers="admin@example.com"){
 def binding = ["buildStatus":buildStatus, "RUN_DISPLAY_URL":"${env.BUILD_URL}","JOB_NAME":"${env.JOB_NAME}","durationString":"${currentBuild.durationString}","commit":commit,"author":author,"message":message,"branch": branchName]  
 def engine = new groovy.text.SimpleTemplateEngine() 
 def template = engine.createTemplate(mail_body_html).make(binding)
-emailext mimeType: 'text/html', attachLog: true, body: template.toString(), compressLog: true, subject: subject, to: subscribers
-
+echo "${template}"
+return template.toString()
 }
